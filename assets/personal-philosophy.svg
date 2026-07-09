@@ -1,1 +1,37 @@
+<svg width="900" height="230" viewBox="0 0 900 230" xmlns="http://www.w3.org/2000/svg">
 
+<rect x="8" y="8" width="884" height="214" rx="22" fill="#1a1b27"></rect>
+
+<rect x="8" y="8" width="884" height="214" rx="22" stroke="#7aa2f7" stroke-width="2"></rect>
+
+<text x="60" y="70" font-size="40" fill="#bb9af7" font-family="Segoe UI">
+
+❝
+
+</text>
+
+<text x="100" y="72" font-size="28" font-family="Segoe UI" font-style="italic" fill="#7dcfff">
+
+I believe the best technology is not the most complex—
+
+</text>
+
+<text x="100" y="110" font-size="28" font-family="Segoe UI" font-style="italic" fill="#7dcfff">
+
+it's the one that solves real-world problems,
+
+</text>
+
+<text x="100" y="148" font-size="28" font-family="Segoe UI" font-style="italic" fill="#7dcfff">
+
+empowers people, and creates lasting impact.
+
+</text>
+
+<text x="670" y="190" font-size="24" font-family="Segoe UI" fill="#7aa2f7">
+
+— Aryan Khandare
+
+</text>
+
+</svg>
