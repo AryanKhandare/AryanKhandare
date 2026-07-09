@@ -206,7 +206,7 @@ Location      : Maharashtra, India 🇮🇳
 
 <div align="center">
 
-<img width="900" src="./assets/personal-philosophy.svg" alt="Personal Philosophy"/>
+<img width="900" src="https://raw.githubusercontent.com/AryanKhandare/AryanKhandare/main/assets/personal-philosophy.svg" alt="Personal Philosophy"/>
 
 </div>
 
