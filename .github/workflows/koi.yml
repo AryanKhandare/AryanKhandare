@@ -14,25 +14,27 @@ on:
 permissions:
   contents: write
 
-concurrency: koi
+concurrency:
+  group: koi
+  cancel-in-progress: false
 
 jobs:
   koi:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v7
+      - name: Checkout repository
+        uses: actions/checkout@v7
 
       - name: Generate Golden Swimming Koi
-        uses: yalongwastaken/git-koi@v1
+        uses: yalongwastaken/git-koi@main
         with:
           login: AryanKhandare
           body: gold
-          size: 768x256
-          scale: 1
+          size: "768x256"
+          scale: "1"
           output-dir: koi
 
-     
       - name: Verify Koi Animation Canvas
         shell: bash
         run: |
@@ -41,15 +43,35 @@ jobs:
 
           data = Path("koi/koi.gif").read_bytes()
 
+          if data[:6] not in (b"GIF87a", b"GIF89a"):
+              raise SystemExit("Invalid GIF file")
+
           width = int.from_bytes(data[6:8], "little")
           height = int.from_bytes(data[8:10], "little")
 
-          print(f"Generated GIF dimensions: {width}x{height}")
+          print(f"GIF dimensions: {width}x{height}")
 
           if (width, height) != (768, 256):
-              raise SystemExit(
-                  "ERROR: Wider pond was not generated!"
-              )
+              raise SystemExit("Incorrect pond dimensions")
 
-          print("SUCCESS: Wider pond verified.")
+          frames = data.count(b"\x00\x2c")
+
+          print("Wider pond dimensions verified.")
+          print(f"GIF image descriptor markers: {frames}")
           PY
+
+      - name: Commit updated koi
+        shell: bash
+        run: |
+          git add koi/koi.gif
+
+          if git diff --cached --quiet; then
+            echo "Koi unchanged."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git commit -m "Update Golden Swimming Koi"
+          git push
