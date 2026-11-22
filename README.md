@@ -1,3 +1,4 @@
+
 <div align="center">
 
 <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&height=170&color=gradient&text=Aryan%20Khandare&fontSize=42&fontColor=ffffff&animation=fadeIn"/>
@@ -207,6 +208,24 @@ Location      : Maharashtra, India 🇮🇳
 <div align="center">
 
 <img width="900" src="https://raw.githubusercontent.com/AryanKhandare/AryanKhandare/main/assets/personal-philosophy.svg" alt="Personal Philosophy"/>
+
+</div>
+
+---
+
+# 🐟 My GitHub Koi
+
+<div align="center">
+
+<img
+  src="koi/koi.gif"
+  width="300"
+  alt="Aryan's Growing Golden GitHub Koi"
+/>
+
+### ✨ Growing with every commit
+
+*Every contribution makes my koi grow.*
 
 </div>
 
