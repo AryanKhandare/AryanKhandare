@@ -1,86 +1,38 @@
-
+# Copy into your profile repository as .github/workflows/koi.yml, then embed
+# <img src="koi/koi.gif" width="256" alt="My koi"> in its README.md.
 name: Koi
 
 on:
   schedule:
+    # Just after midnight UTC, so the koi shows the day that just ended.
     - cron: "20 0 * * *"
-
   workflow_dispatch:
-
   push:
-    paths:
-      - .github/workflows/koi.yml
+    paths: [.github/workflows/koi.yml]
 
 permissions:
   contents: write
 
-concurrency:
-  group: koi
-  cancel-in-progress: false
+concurrency: koi
 
 jobs:
   koi:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
-
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Build Git Koi from latest source
-        run: |
-          cargo install --git https://github.com/yalongwastaken/git-koi.git --force
-
-      - name: Collect GitHub contributions
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          git-koi collect AryanKhandare \
-            --output "$RUNNER_TEMP/koi-snapshot.json"
-
-      - name: Generate Golden Swimming Koi
-        run: |
-          git-koi render "$RUNNER_TEMP/koi-snapshot.json" \
-            --output-dir koi \
-            --body gold \
-            --size 768x256 \
-            --scale 1
-
-      - name: Verify Koi dimensions
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-
-          data = Path("koi/koi.gif").read_bytes()
-
-          if data[:6] not in (b"GIF87a", b"GIF89a"):
-              raise SystemExit("Invalid GIF generated")
-
-          width = int.from_bytes(data[6:8], "little")
-          height = int.from_bytes(data[8:10], "little")
-
-          print(f"Generated GIF: {width}x{height}")
-
-          if (width, height) != (768, 256):
-              raise SystemExit("Incorrect pond dimensions")
-
-          print("SUCCESS: Golden wider pond generated!")
-          PY
-
-      - name: Commit updated koi
+      - uses: actions/checkout@v7
+      - uses: yalongwastaken/git-koi@v1
+        with:
+          body: white
+          output-dir: koi
+      - name: Commit the koi if it changed
         shell: bash
         run: |
           git add koi/koi.gif
-
           if git diff --cached --quiet; then
-            echo "Koi unchanged."
+            echo "The koi is unchanged; nothing to commit."
             exit 0
           fi
-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git commit -m "Update Golden Swimming Koi"
-          git push
+          git commit --quiet --message "koi: draw the day's koi"
+          git push --quiet
