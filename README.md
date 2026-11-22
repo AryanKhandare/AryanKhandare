@@ -219,8 +219,8 @@ Location      : Maharashtra, India 🇮🇳
 
 <img
   src="koi/koi.gif"
-  width="300"
-  alt="Aryan's Growing Golden GitHub Koi"
+  width="100%"
+  alt="Aryan's Golden Koi swimming through GitHub contributions"
 />
 
 ### ✨ Growing with every commit
@@ -230,6 +230,7 @@ Location      : Maharashtra, India 🇮🇳
 </div>
 
 ---
+
 
 <div align="center">
 
