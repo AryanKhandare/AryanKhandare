@@ -32,18 +32,24 @@ jobs:
           scale: 1
           output-dir: koi
 
-      - name: Commit the koi if it changed
+     
+      - name: Verify Koi Animation Canvas
         shell: bash
         run: |
-          git add koi/koi.gif
+          python3 - <<'PY'
+          from pathlib import Path
 
-          if git diff --cached --quiet; then
-            echo "The koi is unchanged; nothing to commit."
-            exit 0
-          fi
+          data = Path("koi/koi.gif").read_bytes()
 
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          width = int.from_bytes(data[6:8], "little")
+          height = int.from_bytes(data[8:10], "little")
 
-          git commit --quiet --message "Update Golden Swimming Koi"
-          git push --quiet
+          print(f"Generated GIF dimensions: {width}x{height}")
+
+          if (width, height) != (768, 256):
+              raise SystemExit(
+                  "ERROR: Wider pond was not generated!"
+              )
+
+          print("SUCCESS: Wider pond verified.")
+          PY
