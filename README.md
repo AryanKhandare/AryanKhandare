@@ -213,15 +213,13 @@ Location      : Maharashtra, India 🇮🇳
 
 ---
 
-# 🐟 My GitHub Koi
-
 <div align="center">
 
-<img
-  src="koi/koi.gif"
-  width="100%"
-  alt="Aryan's Golden Koi swimming through GitHub contributions"
-/>
+# 🐟 My GitHub Koi
+
+<img src="koi/koi.gif"
+     width="100%"
+     alt="Aryan's Golden Swimming Koi"/>
 
 ### ✨ Growing with every commit
 
