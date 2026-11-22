@@ -1,12 +1,20 @@
 
+# GitHub Koi - AryanKhandare
+
 name: Koi
 
 on:
   schedule:
+    # Runs daily at 00:20 UTC (5:50 AM IST)
     - cron: "20 0 * * *"
+
+  # Allows manual execution
   workflow_dispatch:
+
+  # Runs when this workflow file changes
   push:
-    paths: [.github/workflows/koi.yml]
+    paths:
+      - .github/workflows/koi.yml
 
 permissions:
   contents: write
@@ -16,14 +24,18 @@ concurrency: koi
 jobs:
   koi:
     runs-on: ubuntu-latest
+
     steps:
+      # Checkout your profile repository
       - uses: actions/checkout@v7
 
+      # Generate your golden koi
       - uses: yalongwastaken/git-koi@v1
         with:
-          body: white
+          body: gold
           output-dir: koi
 
+      # Commit the generated GIF if it changes
       - name: Commit the koi if it changed
         shell: bash
         run: |
