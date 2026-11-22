@@ -5,13 +5,13 @@ name: Koi
 
 on:
   schedule:
-    # Runs daily at 00:20 UTC (5:50 AM IST)
+    # Daily at 5:50 AM IST
     - cron: "20 0 * * *"
 
-  # Allows manual execution
+  # Allow manual execution
   workflow_dispatch:
 
-  # Runs when this workflow file changes
+  # Run when workflow configuration changes
   push:
     paths:
       - .github/workflows/koi.yml
@@ -26,28 +26,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout your profile repository
+      # Checkout profile repository
       - uses: actions/checkout@v7
 
-      # Generate your golden koi
-      - uses: yalongwastaken/git-koi@v1
+      # Generate Gold Koi
+      - name: Generate Golden Koi
+        uses: yalongwastaken/git-koi@v1
         with:
           body: gold
           output-dir: koi
 
-      # Commit the generated GIF if it changes
+      # Save generated GIF
       - name: Commit the koi if it changed
         shell: bash
         run: |
           git add koi/koi.gif
 
           if git diff --cached --quiet; then
-            echo "The koi is unchanged; nothing to commit."
+            echo "Koi unchanged. No commit required."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git commit --quiet --message "koi: draw the day's koi"
+          git commit --quiet -m "Update Golden GitHub Koi"
           git push --quiet
